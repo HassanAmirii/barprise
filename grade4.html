@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday!</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <style>
+      /* Slider arrow buttons hover effect */
+      .arrow:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-100 min-h-screen font-sans flex flex-col items-center"
+  >
+    <!-- Hero -->
+    <header class="text-center mt-12 p-4 animate-fadeIn">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-sm">
+        Happy Birthday, sister <span id="sisterName">Sister!</span> 🎉
+      </h1>
+      <p class="text-lg md:text-2xl max-w-xl mx-auto">
+        Just a small birthday surprise from me to you—hope it makes you smile.
+        ❤️
+      </p>
+
+      <!-- Play Music Button -->
+      <button
+        id="playMusicBtn"
+        class="mt-6 px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-full shadow-lg transition focus:outline-none"
+      >
+        ▶️ Play Birthday Tune
+      </button>
+      <audio id="bgMusic" autoplay loop>
+        <source src="assets/song.mp3" type="audio/ogg" />
+      </audio>
+    </header>
+
+    <!-- Image Slider -->
+    <section
+      id="sliderContainer"
+      class="relative w-full max-w-3xl mx-auto px-6 mt-12"
+    >
+      <img
+        id="slideImg"
+        src="assets/photo1.jpg"
+        alt="Slide"
+        class="w-full h-80 md:h-[28rem] object-cover rounded-3xl shadow-2xl transition-all duration-700"
+      />
+      <!-- Caption -->
+      <div
+        id="slideCaption"
+        class="mt-4 text-center text-xl md:text-2xl font-medium text-gray-700"
+      ></div>
+
+      <!-- Navigation Arrows -->
+      <button
+        id="prevBtn"
+        class="arrow absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg focus:outline-none"
+      >
+        ←
+      </button>
+      <button
+        id="nextBtn"
+        class="arrow absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg focus:outline-none"
+      >
+        →
+      </button>
+    </section>
+
+    <!-- Surprise Button -->
+    <button
+      id="surpriseBtn"
+      class="fixed bottom-8 right-8 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-full shadow-xl text-xl animate-bounce focus:outline-none"
+    >
+      Birthday card
+    </button>
+
+    <!-- Surprise Modal -->
+    <div
+      id="surpriseModal"
+      class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full text-center relative animate-fadeIn"
+      >
+        <button
+          id="closeModal"
+          class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl leading-none"
+        >
+          &times;
+        </button>
+        <h3 class="text-3xl font-bold mb-4">🎉 Surprise! 🎉</h3>
+        <p class="text-lg mb-6">
+          Happy Birthday to my dear <span id="modalName">Sister</span>,<br />
+          Wishing you a day filled with happiness, love, and everything
+          wonderful. 💖
+        </p>
+        <p class="text-base text-gray-600">—With love, Hassan</p>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      /* Personalization: change name here */
+      const sisterName = "Barakat";
+      document.getElementById("sisterName").textContent = sisterName;
+      // document.getElementById("modalName").textContent = sisterName;
+
+      /* Music control */
+      const playBtn = document.getElementById("playMusicBtn");
+      const bgMusic = document.getElementById("bgMusic");
+      playBtn.addEventListener("click", () => {
+        if (bgMusic.paused) {
+          bgMusic.play();
+          playBtn.textContent = "⏸️ Pause Music";
+        } else {
+          bgMusic.pause();
+          playBtn.textContent = "▶️ Play Birthday Tune";
+        }
+      });
+
+      // Fallback autoplay after first user click (browsers block autoplay without interaction)
+      document.addEventListener(
+        "click",
+        () => {
+          bgMusic.play().catch(() => {});
+        },
+        { once: true }
+      );
+
+      /* Slides */
+      const slides = [
+        {
+          src: "assets/barhusband.jpg",
+        },
+        { src: "assets/bar old 2.jpg" },
+        { src: "assets/bar14.jpg" },
+        { src: "assets/bar21.png" },
+        { src: "assets/bar29.png" },
+        { src: "assets/bar old 3.jpg" },
+        { src: "assets/bargrad2.jpg" },
+        { src: "assets/bar16.jpg" },
+        { src: "assets/bar28.png" },
+        { src: "assets/bar22.png" },
+        { src: "assets/bargrow.jpg" },
+        { src: "assets/bar11.jpg" },
+        { src: "assets/bar old 1.jpg" },
+        { src: "assets/bar20.png" },
+        { src: "assets/bar12.jpg" },
+        { src: "assets/bar15.jpg" },
+        { src: "assets/bar13.jpg" },
+        { src: "assets/bar24.png" },
+        { src: "assets/bar25.png" },
+        { src: "assets/bar19.jpg" },
+        { src: "assets/bar26.png" },
+        { src: "assets/bar27.png" },
+        { src: "assets/bar17.jpg" },
+        { src: "assets/bar18.jpg" },
+      ];
+      let current = 0;
+      const imgEl = document.getElementById("slideImg");
+      const captionEl = document.getElementById("slideCaption");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      function showSlide(index) {
+        const slide = slides[index];
+        imgEl.classList.add("opacity-0");
+        setTimeout(() => {
+          imgEl.src = slide.src;
+          captionEl.textContent = slide.caption;
+          imgEl.classList.remove("opacity-0");
+        }, 300);
+      }
+
+      prevBtn.addEventListener("click", () => {
+        current = (current - 1 + slides.length) % slides.length;
+        showSlide(current);
+      });
+
+      nextBtn.addEventListener("click", () => {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+      });
+
+      // Initialize first slide
+      showSlide(current);
+
+      /* Surprise modal */
+      const surpriseBtn = document.getElementById("surpriseBtn");
+      const surpriseModal = document.getElementById("surpriseModal");
+      const closeModal = document.getElementById("closeModal");
+      surpriseBtn.addEventListener("click", () => {
+        surpriseModal.classList.remove("hidden");
+        confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 } });
+      });
+
+      closeModal.addEventListener("click", () => {
+        surpriseModal.classList.add("hidden");
+      });
+    </script>
+  </body>
+</html>
