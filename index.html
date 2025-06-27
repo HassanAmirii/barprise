@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Happy Birthday!</title>
-    <!-- Tailwind CSS CDN (fine for a quick project) -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Confetti library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
@@ -15,10 +15,10 @@
     </style>
   </head>
   <body
-    class="bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-100 min-h-screen font-sans flex flex-col items-center"
+    class="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-100 flex flex-col items-center"
   >
-    <!-- ──────────── Header / Hero ──────────── -->
-    <header class="text-center mt-12 p-4 animate-fadeIn">
+    <!-- ─── Hero ───────────────────────────────────────────────────────────── -->
+    <header class="text-center mt-12 px-4 animate-fadeIn">
       <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-sm">
         Happy Birthday, sister <span id="sisterName">Sister!</span> 🎉
       </h1>
@@ -27,7 +27,7 @@
         ❤️
       </p>
 
-      <!-- Music Control -->
+      <!-- Music Button -->
       <button
         id="playMusicBtn"
         class="mt-6 px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-full shadow-lg transition"
@@ -35,18 +35,15 @@
         ▶️ Play Birthday Tune
       </button>
       <audio id="bgMusic" autoplay loop>
-        <!-- Make sure song.mp3 is inside assets/ and pushed to Netlify -->
         <source src="assets/song.mp3" type="audio/mpeg" />
-        Your browser does not support the audio element.
       </audio>
     </header>
 
-    <!-- ──────────── Image Slider ──────────── -->
+    <!-- ─── Image Slider ──────────────────────────────────────────────────── -->
     <section
       id="sliderContainer"
       class="relative w-full max-w-3xl mx-auto px-6 mt-12"
     >
-      <!-- We leave src empty; JS sets it to first slide to avoid 404 flashes -->
       <img
         id="slideImg"
         alt="Slide"
@@ -71,15 +68,15 @@
       </button>
     </section>
 
-    <!-- ──────────── Surprise Button ──────────── -->
+    <!-- ─── Surprise Button ───────────────────────────────────────────────── -->
     <button
       id="surpriseBtn"
-      class="fixed bottom-8 right-8 bg-yellow-400 hover:bg-yellow-500 px-6 py-3 rounded-full shadow-xl text-xl animate-bounce"
+      class="fixed bottom-8 right-8 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-full shadow-xl text-xl animate-bounce"
     >
       Birthday card
     </button>
 
-    <!-- ──────────── Surprise Modal ──────────── -->
+    <!-- ─── Modal ─────────────────────────────────────────────────────────── -->
     <div
       id="surpriseModal"
       class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden"
@@ -103,14 +100,14 @@
       </div>
     </div>
 
-    <!-- ──────────── Scripts ──────────── -->
+    <!-- ─── Scripts ───────────────────────────────────────────────────────── -->
     <script>
-      /* ── Personalize names ── */
+      // Personalize names
       const sisterName = "Barakat";
       document.getElementById("sisterName").textContent = sisterName;
       document.getElementById("modalName").textContent = sisterName;
 
-      /* ── Music control & autoplay workaround ── */
+      // Music control
       const playBtn = document.getElementById("playMusicBtn");
       const bgMusic = document.getElementById("bgMusic");
       playBtn.addEventListener("click", () => {
@@ -122,43 +119,40 @@
           playBtn.textContent = "▶️ Play Birthday Tune";
         }
       });
-      // Play automatically after first user click anywhere (except play button)
-      const autoPlay = (e) => {
+      document.addEventListener("click", function autoPlay(e) {
         if (e.target === playBtn) return;
         if (bgMusic.paused) bgMusic.play().catch(() => {});
         document.removeEventListener("click", autoPlay);
-      };
-      document.addEventListener("click", autoPlay);
+      });
 
-      /* ── Slides array (ensure EVERY file exists in assets/) ── */
+      // Slide filenames (ensure they all exist in assets/)
       const slides = [
-        { src: "assets/barhusband.jpg", caption: "" },
-        { src: "assets/barold2.jpg", caption: "" },
-        { src: "assets/bar14.jpg", caption: "" },
-        { src: "assets/bar21.png", caption: "" },
-        { src: "assets/bar29.png", caption: "" },
-        { src: "assets/barold3.jpg", caption: "" },
-        { src: "assets/bargrad2.jpg", caption: "" },
-        { src: "assets/bar16.jpg", caption: "" },
-        { src: "assets/bar28.png", caption: "" },
-        { src: "assets/bar22.png", caption: "" },
-        { src: "assets/bargrow.jpg", caption: "" },
-        { src: "assets/bar11.jpg", caption: "" },
-        { src: "assets/barold1.jpg", caption: "" },
-        { src: "assets/bar20.png", caption: "" },
-        { src: "assets/bar12.jpg", caption: "" },
-        { src: "assets/bar15.jpg", caption: "" },
-        { src: "assets/bar13.jpg", caption: "" },
-        { src: "assets/bar24.png", caption: "" },
-        { src: "assets/bar25.png", caption: "" },
-        { src: "assets/bar19.jpg", caption: "" },
-        { src: "assets/bar26.png", caption: "" },
-        { src: "assets/bar27.png", caption: "" },
-        { src: "assets/bar17.jpg", caption: "" },
-        { src: "assets/bar18.jpg", caption: "" },
+        "bar1.png",
+        "barold2.jpg",
+        "bar14.jpg",
+        "bar21.png",
+        "bar29.png",
+        "barold3.jpg",
+        "bargrad2.jpg",
+        "bar16.jpg",
+        "bar28.png",
+        "bar22.png",
+        "bargrow.jpg",
+        "bar11.jpg",
+        "barold1.jpg",
+        "bar20.png",
+        "bar12.jpg",
+        "bar15.jpg",
+        "bar13.jpg",
+        "bar24.png",
+        "bar25.png",
+        "bar19.jpg",
+        "bar26.png",
+        "bar27.png",
+        "bar17.jpg",
+        "bar18.jpg",
       ];
 
-      /* ── Slider logic ── */
       let current = 0;
       const imgEl = document.getElementById("slideImg");
       const captionEl = document.getElementById("slideCaption");
@@ -166,11 +160,11 @@
       const nextBtn = document.getElementById("nextBtn");
 
       function showSlide(index) {
-        const slide = slides[index];
+        const file = slides[index];
         imgEl.classList.add("opacity-0");
         setTimeout(() => {
-          imgEl.src = slide.src;
-          captionEl.textContent = slide.caption || "";
+          imgEl.src = `assets/${file}`;
+          captionEl.textContent = "";
           imgEl.classList.remove("opacity-0");
         }, 200);
       }
@@ -184,10 +178,10 @@
         showSlide(current);
       });
 
-      // Initialize with first slide immediately
+      // Initialize first slide
       showSlide(current);
 
-      /* ── Surprise modal ── */
+      // Modal control
       const surpriseBtn = document.getElementById("surpriseBtn");
       const surpriseModal = document.getElementById("surpriseModal");
       const closeModal = document.getElementById("closeModal");
